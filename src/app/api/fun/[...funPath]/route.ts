@@ -5,9 +5,12 @@ const API_KEY  = process.env.NEXT_PUBLIC_FUN_API_KEY!;
 
 export async function GET(
     _req: Request,
-    { params }: { params: { funPath: string[] } }
+    context: { params: { funPath: string[] } }
 ) {
-    const apiEndpoint = `${API_BASE}/${params.funPath.join("/")}`;
+    // This is throwing a warning that await is not needed, but it is necessary because Next.js 15
+    // params is an async object now. https://nextjs.org/docs/messages/sync-dynamic-apis
+    const { funPath } = await context.params;
+    const apiEndpoint = `${API_BASE}/${funPath.join("/")}`;
 
     const apiResponse = await fetch(apiEndpoint, {
         headers: { "X-Api-Key": API_KEY },

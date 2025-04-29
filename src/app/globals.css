@@ -1,1 +1,27 @@
 @import 'tailwindcss';
+
+@theme {
+
+    /* primary text */
+    --color-text-main: #e4dfc8;
+    /* page background */
+    --color-background: #1e1f29;
+    /* card/container background */
+    --color-primary: #2e303c;
+    /* inner panel background */
+    --color-secondary: #333447;
+    /* call-to-action accent (you can also split this into a gradient) */
+    --color-accent: #ffba85;
+}
+
+/* Hide the up/down arrows in Chrome, Edge, Safari */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Hide the arrows in Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
