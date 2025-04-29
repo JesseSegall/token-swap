@@ -1,21 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchTokenPrice } from "@/lib/api";
+import { PriceInfo } from "@/types/api";
 
 export default function usePriceInfo(
     chainId: string,
     address: string,
-    usdAmount: number
+    enabled: boolean = false
 ) {
-    return useQuery({
-        queryKey: ["priceInfo", chainId, address, usdAmount],
-        queryFn: async () => {
-            const { unitPrice } = await fetchTokenPrice(chainId, address);
-            return { amount: usdAmount / unitPrice };
-        },
-        enabled: !!address && usdAmount > 0,
+    return useQuery<PriceInfo>({
+        queryKey: ["priceInfo", chainId, address],
+        queryFn: () => fetchTokenPrice(chainId, address),
+        enabled: enabled,
         retry: 2,
-        //TODO: Refetches price data every 10 seconds, can adjust later when UI done
-        refetchInterval: 10_000,
-        refetchIntervalInBackground: true,
     });
 }
